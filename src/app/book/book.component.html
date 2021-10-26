@@ -1,0 +1,110 @@
+   <div id="theList" class="container">
+     <h3>Books List</h3>
+     <input name="search" [(ngModel)]="search" placeholder="search">
+    <div *ngFor="let item of books | filter: 'filterCriteria'"> 
+      <div>
+      <input type="text"
+             [(ngModel)]="books[i].name"
+             class="form-control"
+             required
+             pattern="^[a-zA-Z ]+$"
+             #name="ngModel"
+             [ngClass]="{ 'is-invalid': name.touched && name.invalid }">
+    </div>
+    <div>
+      <input type="text"
+             [(ngModel)]="books[i].AuthorName"
+             class="form-control"
+             required
+             pattern="^[a-zA-Z ]+$"
+             #AuthorName="ngModel"
+             [ngClass]="{ 'is-invalid': AuthorName.touched && AuthorName.invalid }">
+    </div>
+    <div>
+      <input type="number"
+             [(ngModel)]="books[i].price"
+             class="form-control"
+             required
+             pattern="^[0-9]$"
+             #price="ngModel"
+             >
+    </div>
+    <div class="col-4">
+      <input type="button"
+             value="Update"
+             class="btn btn-success btn-sm"
+             [disabled]="name.invalid || AuthorName.invalid"
+             (click)="updateBook(name, AuthorName, price, item.id)">
+             <input type="button"
+             value="Delete"
+             class="btn btn-danger btn-sm"
+             (click)="deleteBook(item.id? item.id:0)">
+    </div>
+  </div>
+</div>
+<div id="theForm" class="container">
+  <h3>Add A New Book</h3>
+  <form #f="ngForm" name="theForm" autocomplete="off" (submit)="addBook(f)">
+    <div class="mb-1">
+      <label for="name" class="form-label">Name</label>
+      <div class="input-group has-validation">
+      <input type="text"
+            class="col-2"
+            name="name"
+            [(ngModel)]="book.name"
+            #bookModel="ngModel"
+            placeholder="Name"
+            required
+            pattern="^[a-zA-Z ]+$">
+      <div class="invalid-feedback" *ngIf="bookModel.errors?.required && bookModel.touched">
+        The name is required
+      </div>
+      <div class="invalid-feedback" *ngIf="bookModel.errors?.pattern && bookModel.touched">
+        The name can only contain the letters a-z or A-Z
+      </div>
+    </div>
+    </div>
+    <div class="mb-1">
+      <label for="name" class="form-label">AuthorName</label>
+      <div class="input-group has-validation">
+      <input type="text"
+        class="col-2"
+        name="AuthorName"
+        [(ngModel)]="book.AuthorName"
+        #bookModel="ngModel"
+        placeholder="AuthorName"
+        required
+        pattern="^[a-zA-Z ]+$">
+      <div class="invalid-feedback" *ngIf="bookModel.errors?.required && bookModel.touched">
+        The AuthorName is required
+      </div>
+      <div class="invalid-feedback" *ngIf="bookModel.errors?.pattern && bookModel.touched">
+        The AuthorName can only contain the letters a-z or A-Z
+      </div>
+    </div>
+    <div class="mb-1">
+      <label for="name" class="form-label">Price</label>
+      <div class="input-group has-validation">
+      <input type="number"
+      class="col-2"
+      name="price"
+      [(ngModel)]="book.price"
+      #bookPrice="ngModel"
+      placeholder="Price"
+      required
+      min="10"
+      pattern="^[0-9]$">
+      <div class="invalid-feedback" *ngIf="bookPrice.errors?.required && bookPrice.touched">
+        The price is required
+      </div>
+    </div>
+  </div>
+
+
+
+    <button
+        class="btn btn-primary btn-sm"
+        >Add</button>
+        </div>
+  </form>
+</div>
